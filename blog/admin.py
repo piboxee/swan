@@ -13,6 +13,7 @@ class PostAdmin(admin.ModelAdmin):
     date_hierarchy = 'published_date'
     ordering = ('status', 'published_date')
 
+
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('name', 'email', 'post', 'created_date', 'active')
