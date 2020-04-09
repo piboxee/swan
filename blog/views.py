@@ -3,7 +3,7 @@ from django.views.generic import ListView
 from django.core.mail import send_mail
 
 from .models import Post
-from .forms import EmailPostForm
+from .forms import EmailPostForm, CommentForm
 
 
 class PostListView(ListView):
@@ -20,8 +20,22 @@ def post_detail(request, year, month, day, post):
                              published_date__month=month,
                              published_date__day=day)
 
+    comments = post.comments.filter(active=True)
+    new_comment = None
+    if request.method == 'POST':
+        comment_form = CommentForm(data=request.POST)  # A comment was posted
+        if comment_form.is_valid():
+            new_comment = comment_form.save(commit=False)  # Create new comment, but don't save to database
+            new_comment.post = post  # Assign the current post to comment
+            new_comment.save()
+    else:
+        comment_form = CommentForm()
+
     context = {
-        'post': post
+        'post': post,
+        'comments': comments,
+        'new_comment': new_comment,
+        'comment_form': comment_form
     }
 
     return render(request, 'blog/post/detail.html', context)
