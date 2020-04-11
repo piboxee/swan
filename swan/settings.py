@@ -25,7 +25,7 @@ SECRET_KEY = '#e_71yo$5xnn2kzol+y+gg8#hx-$i7+4-s#!evw%45770lilwk'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['mysite.com', 'localhost', '127.0.0.1']
 
 SITE_ID = 1
 
@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
 
     'taggit',
+    'social_django',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -95,8 +97,18 @@ DATABASES = {
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-    'account.authentication.EmailAuthBackend'
+    'account.authentication.EmailAuthBackend',
+    'social_core.backends.facebook.FacebookAppOAuth2',
+    'social_core.backends.google.GoogleOAuth2'
 ]
+
+SOCIAL_AUTH_FACEBOOK_KEY = '213959873245106'
+SOCIAL_AUTH_FACEBOOK_SECRET = 'e7a91243ccbf7c2f84dec3f48802f20f'
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+
+SOCIAL_AUTH_GOOGLE_KEY = 'AIzaSyC2xvUPa_Mfqcs9aAdvketkFIiBVEJjRag'
+SOCIAL_AUTH_GOOGLE_SECRET = '3-7cp6PAPUK3WgL8wUoDO_1d'
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
